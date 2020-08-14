@@ -6,11 +6,11 @@
 import numpy as np
 
 
-def cal_bond_list(atoms, frame, bond_length):
+def cal_bond_list(atoms, bond_length):
     '''
     功能
     ----------
-    计算atoms第frame帧的键列表
+    计算atoms(单帧)的键列表
 
     参数
     ----------
@@ -22,11 +22,11 @@ def cal_bond_list(atoms, frame, bond_length):
     ----------
     无
     '''
-    distances = atoms[frame].get_all_distances(mic=True)
+    distances = atoms.get_all_distances(mic=True)
     bond_list_init = list()
     for i in range(len(distances)):
         nearest_atom = np.argsort(distances[i])[1]
-        if atoms[frame].get_distance(i, nearest_atom, mic=True) > bond_length:
+        if atoms.get_distance(i, nearest_atom, mic=True) > bond_length:
             continue
         bond_list_init += [[i, nearest_atom]]
     # print(bond_list_init)
