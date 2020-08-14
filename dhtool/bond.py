@@ -4,18 +4,17 @@
 和bond有关的一些函数
 '''
 import numpy as np
-from ase import io
 
 
-def cal_bond_list(f_extxyz, frame, bond_length):
+def cal_bond_list(atoms, frame, bond_length):
     '''
     功能
     ----------
-    计算extxyz文件第frame帧的键列表
+    计算atoms第frame帧的键列表
 
     参数
     ----------
-    f_extxyz: extxyz文件名
+    atoms: ASE中的atoms对象
     frame: which frame of extxyz to calculate bond list
     bond_length: 最大键长
 
@@ -23,12 +22,11 @@ def cal_bond_list(f_extxyz, frame, bond_length):
     ----------
     无
     '''
-    atoms = io.read(f_extxyz, index='%d' % frame, format='extxyz')
-    distances = atoms.get_all_distances(mic=True)
+    distances = atoms[frame].get_all_distances(mic=True)
     bond_list_init = list()
     for i in range(len(distances)):
         nearest_atom = np.argsort(distances[i])[1]
-        if atoms.get_distance(i, nearest_atom, mic=True) > bond_length:
+        if atoms[frame].get_distance(i, nearest_atom, mic=True) > bond_length:
             continue
         bond_list_init += [[i, nearest_atom]]
     # print(bond_list_init)
