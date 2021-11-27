@@ -58,16 +58,16 @@ def move_bonded_atoms(atoms, bond_list, flag):
     lz = atoms.get_cell()[2][2]
     positions = atoms.get_positions()
     for i in bond_list:
-        if np.abs(positions[i[1]][2] - positions[i[2]][2]) > lz/2.0:
+        if np.abs(positions[i[0]][2] - positions[i[1]][2]) > lz/2.0:
             if flag == 'u':
-                if positions[i[1]][2] > positions[i[2]][2]:
-                    positions[i[2]][2] += lz
-                else:
+                if positions[i[0]][2] > positions[i[1]][2]:
                     positions[i[1]][2] += lz
-            if flag == 'd':
-                if positions[i[1]][2] > positions[i[2]][2]:
-                    positions[i[1]][2] -= lz
                 else:
-                    positions[i[2]][2] -= lz
+                    positions[i[0]][2] += lz
+            if flag == 'd':
+                if positions[i[0]][2] > positions[i[1]][2]:
+                    positions[i[0]][2] -= lz
+                else:
+                    positions[i[1]][2] -= lz
     atoms_moved = Atoms(symbols=atoms.get_chemical_symbols(), positions=positions, cell=atoms.get_cell(), pbc=atoms.get_pbc())
     return atoms_moved
