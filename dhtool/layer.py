@@ -6,7 +6,7 @@
 import numpy as np
 
 
-def plot_layer_stacking(atoms_com,num_of_layers,output_dir):
+def plot_layer_stacking(atoms_com,num_of_layers,output_dir,height=5):
     '''
     功能
     ----------
@@ -17,6 +17,7 @@ def plot_layer_stacking(atoms_com,num_of_layers,output_dir):
     atoms_com: ASE中的atoms对象(单帧)
     num_of_layers: 层数
     output_dir: 输出文件夹
+    height: z坐标直方图峰的最小值
 
     返回值
     ----------
@@ -33,7 +34,6 @@ def plot_layer_stacking(atoms_com,num_of_layers,output_dir):
         return pos[sel]
     myfun.mkdir("%s/layer_pos"%output_dir)
     num_bins = 300
-    height = 10
     delta = 1
     layer_pos = list()
     atoms_com.wrap()
